@@ -10,20 +10,22 @@
 <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
 
 <title>
-
+  
     Getting started &middot; Bootstrap
-
+  
 </title>
 
 <!-- Bootstrap core CSS -->
 
-<link href="../dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="../dist/css/bootstrap.css" rel="stylesheet">
 
 
 
 <!-- Documentation extras -->
 
-<link href="../assets/css/docs.min.css" rel="stylesheet">
+<link href="../assets/css/src/pygments-manni.css" rel="stylesheet">
+<link href="../assets/css/src/anchor.css" rel="stylesheet">
+<link href="../assets/css/src/docs.css" rel="stylesheet">
 
 <!--[if lt IE 9]><script src="../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="../assets/js/ie-emulation-modes-warning.js"></script>
@@ -91,7 +93,7 @@
 
 
     <!-- Docs page layout -->
-    <div class="bs-docs-header" id="content">
+    <div class="bs-docs-header" id="content" tabindex="-1">
       <div class="container">
         <h1>Getting started</h1>
         <p>An overview of Bootstrap, how to download and use, basic templates and examples, and more.</p>
@@ -218,7 +220,7 @@ Copy any changes made here over to the README too. -->
   <p class="lead">Bootstrap uses <a href="http://gruntjs.com">Grunt</a> for its build system, with convenient methods for working with the framework. It's how we compile our code, run tests, and more.</p>
 
   <h2 id="grunt-installing">Installing Grunt</h2>
-  <p>To install Grunt, you must <strong>first <a href="http://nodejs.org/download/">download and install node.js</a></strong> (which includes npm). npm stands for <a href="http://npmjs.org/">node packaged modules</a> and is a way to manage development dependencies through node.js.</p>
+  <p>To install Grunt, you must <strong>first <a href="http://nodejs.org/download/">download and install node.js</a></strong> (which includes npm). npm stands for <a href="https://www.npmjs.com/">node packaged modules</a> and is a way to manage development dependencies through node.js.</p>
 
   Then, from the command line:
   <ol>
@@ -260,6 +262,7 @@ Copy any changes made here over to the README too. -->
     <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">"X-UA-Compatible"</span> <span class="na">content=</span><span class="s">"IE=edge"</span><span class="nt">&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">"viewport"</span> <span class="na">content=</span><span class="s">"width=device-width, initial-scale=1"</span><span class="nt">&gt;</span>
+    <span class="c">&lt;!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags --&gt;</span>
     <span class="nt">&lt;title&gt;</span>Bootstrap 101 Template<span class="nt">&lt;/title&gt;</span>
 
     <span class="c">&lt;!-- Bootstrap --&gt;</span>
@@ -651,6 +654,9 @@ Copy any changes made here over to the README too. -->
   <h3 id="support-browser-zooming">Browser zooming</h3>
   <p>Page zooming inevitably presents rendering artifacts in some components, both in Bootstrap and the rest of the web. Depending on the issue, we may be able to fix it (search first and then open an issue if need be). However, we tend to ignore these as they often have no direct solution other than hacky workarounds.</p>
 
+  <h3 id="support-sticky-hover-mobile">Sticky <code>:hover</code>/<code>:focus</code> on mobile</h3>
+  <p>Even though real hovering isn't possible on most touchscreens, most mobile browsers emulate hovering support and make <code>:hover</code> "sticky". In other words, <code>:hover</code> styles start applying after tapping an element and only stop applying after the user taps some other element. This can cause Bootstrap's <code>:hover</code> states to become unwantedly "stuck" on such browsers. Some mobile browsers also make <code>:focus</code> similarly sticky. There is currently no simple workaround for these issues other than removing such styles entirely.</p>
+
   <h3 id="support-printing">Printing</h3>
   <p>Even in some modern browsers, printing can be quirky.</p>
   <p>In particular, as of Chrome v32 and regardless of margin settings, Chrome uses a viewport width significantly narrower than the physical paper size when resolving media queries while printing a webpage. This can result in Bootstrap's extra-small grid being unexpectedly activated when printing. <a href="https://github.com/twbs/bootstrap/issues/12078">See #12078 for some details.</a> Suggested workarounds:</p>
@@ -660,7 +666,7 @@ Copy any changes made here over to the README too. -->
     <li>Add custom media queries to change the grid size breakpoints for print media only.</li>
   </ul>
   <p>Also, as of Safari v8.0, fixed-width <code>.container</code>s can cause Safari to use an unusually small font size when printing. See <a href="https://github.com/twbs/bootstrap/issues/14868">#14868</a> for more details. One potential workaround for this is adding the following CSS:</p>
-  <div class="highlight"><pre><code class="language-css" data-lang="css"><span class="k">@media</span> <span class="n">print</span> <span class="p">{</span>
+<div class="highlight"><pre><code class="language-css" data-lang="css"><span class="k">@media</span> <span class="n">print</span> <span class="p">{</span>
   <span class="nc">.container</span> <span class="p">{</span>
     <span class="nl">width</span><span class="p">:</span> <span class="nb">auto</span><span class="p">;</span>
   <span class="p">}</span>
@@ -742,11 +748,16 @@ Copy any changes made here over to the README too. -->
   <p class="lead">Bootstrap follows common web standards and&mdash;with minimal extra effort&mdash;can be used to create sites that are accessible to those using <abbr title="Assistive Technology" class="initialism">AT</abbr>.</p>
 
   <h3>Skip navigation</h3>
-  <p>If your navigation contains many links and comes before the main content in the DOM, add a <code>Skip to main content</code> link before the navigation <a href="http://a11yproject.com/posts/skip-nav-links/">(read why)</a>. Using the <code>.sr-only</code> class will visually hide the skip link, and the <code>.sr-only-focusable</code> class will ensure that the link becomes visible once focused (for sighted keyboard users).</p>
+  <p>If your navigation contains many links and comes before the main content in the DOM, add a <code>Skip to main content</code> link before the navigation (for a simple explanation, see this <a href="http://a11yproject.com/posts/skip-nav-links/">A11Y Project article on skip navigation links</a>). Using the <code>.sr-only</code> class will visually hide the skip link, and the <code>.sr-only-focusable</code> class will ensure that the link becomes visible once focused (for sighted keyboard users).</p>
+  <div class="bs-callout bs-callout-danger" id="callout-tables-striped-ie8">
+    <p>Due to long-standing shortcomings/bugs in Chrome (see <a href="https://code.google.com/p/hromium/issues/detail?id=262171" title="Chromium bug tracker - Issue 262171: Focus should cycle from named anchor">issue 262171 in the Chromium bug tracker</a>) and Internet Explorer (see this article on <a href="http://accessibleculture.org/articles/2010/05/in-page-links/">in-page links and focus order</a>), you will need to make sure that the target of your skip link is at least programmatically focusable by adding <code>tabindex="-1"</code>.</p>
+    <p>In addition, you may want to explicitly suppress a visible focus indication on the target (particularly as Chrome currently also sets focus on elements with <code>tabindex="-1"</code> when they are clicked with the mouse) with <code>#content:focus { outline: none; }</code>.</p>
+    <p>Note that this bug will also affect any other in-page links your site may be using, rendering them useless for keyboard users. You may consider adding a similar stop-gap fix to all other named anchors / fragment identifiers that act as link targets.</p>
+  </div>
 <div class="highlight"><pre><code class="language-html" data-lang="html"><span class="nt">&lt;body&gt;</span>
   <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"#content"</span> <span class="na">class=</span><span class="s">"sr-only sr-only-focusable"</span><span class="nt">&gt;</span>Skip to main content<span class="nt">&lt;/a&gt;</span>
   ...
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span> <span class="na">id=</span><span class="s">"content"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span> <span class="na">id=</span><span class="s">"content"</span> <span class="na">tabindex=</span><span class="s">"-1"</span><span class="nt">&gt;</span>
     <span class="c">&lt;!-- The main page content --&gt;</span>
   <span class="nt">&lt;/div&gt;</span>
 <span class="nt">&lt;/body&gt;</span></code></pre></div>
@@ -774,7 +785,7 @@ Copy any changes made here over to the README too. -->
 
   <h4>It requires you to:</h4>
   <ul>
-    <li>Include the license and copyright notice in your works</li>
+    <li>Keep the license and copyright notice included in Bootstrap's CSS and JavaScript files when you use them in your works</li>
   </ul>
 
   <h4>It permits you to:</h4>
@@ -808,25 +819,25 @@ Copy any changes made here over to the README too. -->
 
   <p class="lead">Community members have translated Bootstrap's documentation into various languages. None are officially supported and they may not always be up to date.</p>
   <ul>
-
+    
       <li><a href="http://v3.bootcss.com/" hreflang="zh">Bootstrap 中文文档 (Chinese)</a></li>
-
+    
       <li><a href="http://getbootstrap.dk/" hreflang="da">Bootstrap på Dansk (Danish)</a></li>
-
-      <li><a href="http://www.oneskyapp.com/docs/bootstrap/fr" hreflang="fr">Bootstrap en Français (French)</a></li>
-
+    
+      <li><a href="http://www.oneskyapp.com/fr/docs/bootstrap/getting-started/" hreflang="fr">Bootstrap en Français (French)</a></li>
+    
       <li><a href="http://holdirbootstrap.de/" hreflang="de">Bootstrap auf Deutsch (German)</a></li>
-
+    
       <li><a href="http://www.hackerstribe.com/guide/IT-bootstrap-3.1.1/" hreflang="it">Bootstrap in Italiano (Italian)</a></li>
-
+    
       <li><a href="http://bootstrapk.com/BS3/" hreflang="ko">Bootstrap 한국어 (Korean)</a></li>
-
-      <li><a href="http://www.oneskyapp.com/docs/bootstrap/ru" hreflang="ru">Bootstrap по-русски (Russian)</a></li>
-
-      <li><a href="http://www.oneskyapp.com/docs/bootstrap/es" hreflang="es">Bootstrap en Español (Spanish)</a></li>
-
+    
+      <li><a href="http://www.oneskyapp.com/ru/docs/bootstrap/" hreflang="ru">Bootstrap по-русски (Russian)</a></li>
+    
+      <li><a href="http://www.oneskyapp.com/es/docs/bootstrap/" hreflang="es">Bootstrap en Español (Spanish)</a></li>
+    
       <li><a href="http://twbs.docs.org.ua" hreflang="uk">Bootstrap українською (Ukrainian)</a></li>
-
+    
   </ul>
   <p><strong class="text-danger">We don't help organize or host translations, we just link to them.</strong></p>
   <p>Finished a new or better translation? Open a pull request to add it to our list.</p>
@@ -834,11 +845,11 @@ Copy any changes made here over to the README too. -->
 
 
         </div>
-
+        
         <div class="col-md-3" role="complementary">
           <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm">
             <ul class="nav bs-docs-sidenav">
-
+              
                 <li>
   <a href="#download">Download</a>
 </li>
@@ -897,6 +908,7 @@ Copy any changes made here over to the README too. -->
     <li><a href="#support-safari-percentages">Safari percent rounding</a></li>
     <li><a href="#support-fixed-position-keyboards">Modals, navbars, and virtual keyboards</a></li>
     <li><a href="#support-browser-zooming">Browser zooming</a></li>
+    <li><a href="#support-sticky-hover-mobile">Sticky :hover/:focus on mobile</a></li>
     <li><a href="#support-printing">Printing</a></li>
     <li><a href="#support-android-stock-browser">Android stock browser</a></li>
     <li><a href="#support-validators">Validators</a></li>
@@ -915,15 +927,15 @@ Copy any changes made here over to the README too. -->
   <a href="#translations">Translations</a>
 </li>
 
-
+              
             </ul>
             <a class="back-to-top" href="#top">
               Back to top
             </a>
-
+            
           </nav>
         </div>
-
+        
       </div>
     </div>
 
@@ -980,11 +992,19 @@ Copy any changes made here over to the README too. -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 
-  <script src="../dist/js/bootstrap.min.js"></script>
+  <script src="../dist/js/bootstrap.js"></script>
 
 
 
-  <script src="../assets/js/docs.min.js"></script>
+  
+  <script src="../assets/js/vendor/holder.js"></script>
+  
+  <script src="../assets/js/vendor/ZeroClipboard.min.js"></script>
+  
+  <script src="../assets/js/vendor/anchor.js"></script>
+  
+  <script src="../assets/js/src/application.js"></script>
+  
 
 
 
